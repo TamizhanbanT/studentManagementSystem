@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Class {
+  className Int      @id
+  students  Student[]
+  mentors   Mentor[] @relation("mentorClasses")
+}
+
+model Student {
+  id           Int       @id @default(autoincrement())
+  studentName  String
+  parentName   String
+  parentPhone  Int
+  address      String
+  pincode      Int
+  className    Int
+  class        Class     @relation(fields: [className], references: [className])
+  mentorId     Int?
+  mentor       Mentor?   @relation(fields: [mentorId], references: [id])
+  subjects     Subject[] @relation("StudentSubjects")  
+  fees         Int?
+  marks        Int?
+  todaysUpdate String?
+  createdAt    DateTime  @default(now())
+}
+
+model Mentor {
+  id          Int       @id @default(autoincrement())
+  mentorName  String
+  mentorPhone Int
+  classes     Class[]   @relation("mentorClasses")
+  subjects    Subject[] @relation("mentorSubjects")    
+  students    Student[]
+}
+
+model Subject {
+  id          Int       @id @default(autoincrement())
+  subjectName String    @unique
+  students    Student[] @relation("StudentSubjects")   
+  mentors     Mentor[]  @relation("mentorSubjects")  
+}
