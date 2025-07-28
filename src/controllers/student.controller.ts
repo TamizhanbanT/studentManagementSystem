@@ -37,7 +37,36 @@ if(!student)return res.status(404).json({message:"Student Not Found"})
 res.json(student)
 }catch(error:any){
 
+}
+}
 
+//update
+
+export const update=async(req:Request, res:Response)=>{
+try{
+const id= parseInt(req.params.id);
+if(!id) return res.status(400).json({message:"invalid Id"});
+const dto:UpdateStudentDto=req.body;
+const updated=await studentService.updateStudent(id,dto);
+res.json(updated);
+
+}catch(error:any){
+res.status(400).json({message:error.message});
 }
+};
+
+//delete
+
+export const remove = async (req:Request,res:Response)=>{
+try{
+
+    const id=parseInt(req.params.id);
+    if(!id) return res.status(400).json({message:"Invalid Id "})
+
+    await studentService.deleteStudent(id);
+}catch(error:any){
+res.status(400).json({message:error.message})
 }
+};
+
 

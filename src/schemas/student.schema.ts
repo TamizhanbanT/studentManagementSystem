@@ -11,7 +11,7 @@ export const studentSchema=z.object({
     fees:z.number().int().optional(),
     marks:z.number().int().optional(),
     todaysUpdate:z.string().optional(),
-    subjects:z.array(z.string().optional( ))
+    subjects:z.array(z.number().optional( ))
 })
 
 export const updateStudentSchema=studentSchema.partial()

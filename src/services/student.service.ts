@@ -12,12 +12,12 @@ export const createStudent=async (data:CreateStudentDto)=>{
                 ...data,
                 subjects: data.subjects?{
                     connect:data.subjects.map(id=>({id}))
-                }:undefined,
+                }:undefined
             },
             include:{
                 class:true,
                 mentor:true,
-                suubjects:true
+                subjects:true
             },
         })
 
@@ -35,7 +35,7 @@ export const getAllStudents=async ()=>{
         return await prisma.student.findMany({
             include:{
                 class:true,
-                subjeccts:true,
+                subjects:true,
                 mentor:true
             }
         })
@@ -75,6 +75,7 @@ export const updateStudent =async(id:number, data:UpdateStudentDto)=>{
         if(!id) throw new Error ("Invalid Id");
         return await prisma.student.update({
             where:{id},
+            data:{},
             include:{
                 class:true,
                 mentor:true,
