@@ -17,7 +17,7 @@ model Student {
   id           Int       @id @default(autoincrement())
   studentName  String
   parentName   String
-  parentPhone  Int
+  parentPhone  BigInt
   address      String
   pincode      Int
   className    Int
@@ -34,7 +34,7 @@ model Student {
 model Mentor {
   id          Int       @id @default(autoincrement())
   mentorName  String
-  mentorPhone Int
+  mentorPhone BigInt
   classes     Class[]   @relation("mentorClasses")
   subjects    Subject[] @relation("mentorSubjects")    
   students    Student[]
