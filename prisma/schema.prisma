@@ -13,9 +13,38 @@ model Class {
   mentors   Mentor[] @relation("mentorClasses")
 }
 
+// model Student {
+//   id           Int       @id @default(autoincrement())
+//   studentName  String
+//   parentName   String
+//   parentPhone  BigInt
+//   address      String
+//   pincode      Int
+//   className    Int
+//   class        Class     @relation(fields: [className], references: [className])
+//   mentorId     Int?
+//   mentor       Mentor?   @relation(fields: [mentorId], references: [id])
+//   subjects     Subject[] @relation("StudentSubjects")  
+//   fees         Int?
+//   marks        Int?
+//   todaysUpdate String?
+//   createdAt    DateTime  @default(now())
+// }
+
+// model Mentor {
+//   id          Int       @id @default(autoincrement())
+//   mentorName  String
+//   mentorPhone BigInt
+//   classes     Class[]   @relation("mentorClasses")
+//   subjects    Subject[] @relation("mentorSubjects")    
+//   students    Student[]
+// }
+
 model Student {
   id           Int       @id @default(autoincrement())
   studentName  String
+  email        String?    @unique
+  password     String?
   parentName   String
   parentPhone  BigInt
   address      String
@@ -29,15 +58,19 @@ model Student {
   marks        Int?
   todaysUpdate String?
   createdAt    DateTime  @default(now())
+  role         String?    @default("student")
 }
 
 model Mentor {
   id          Int       @id @default(autoincrement())
   mentorName  String
+  email       String?   @unique
+  password    String?
   mentorPhone BigInt
   classes     Class[]   @relation("mentorClasses")
   subjects    Subject[] @relation("mentorSubjects")    
   students    Student[]
+  role        String?   @default("mentor")
 }
 
 model Subject {
