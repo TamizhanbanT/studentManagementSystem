@@ -1,13 +1,15 @@
 import {Router} from 'express';
 import * as studentController from '../controllers/student.controller';
 import { validateStudent,validateStudentUpdate } from '../middlewares/valitateStudent';
+import { verifyToken } from '../middlewares/auth.middleware';
 
 const router=Router();
 
-router.post('/',validateStudent,studentController.create)
-router.get('/',studentController.getAll)
-router.get('/:id',studentController.getById)
-router.put('/:id',validateStudent, studentController.update)
-router.delete('/:id',studentController.remove)
+router.post('/',verifyToken,validateStudent,studentController.create)
+router.get('/',verifyToken,studentController.getAll)
+// router.get('/:id',studentController.getById)
+router.get("/:id", verifyToken, studentController.getById);
+router.put('/:id',verifyToken,validateStudent, studentController.update)
+router.delete('/:id',verifyToken,studentController.remove)
 
 export default router;
