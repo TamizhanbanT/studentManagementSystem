@@ -33,15 +33,36 @@ export const getAll = async (req: AuthRequest, res: Response) => {
   }
 };
 
-// Get by ID - allow only student to view their own data
+// // Get by ID - allow only student to view their own data
+
+// export const getById = async (req: AuthRequest, res: Response) => {
+//   try {
+//     const id = parseInt(req.params.id);
+//     if (!id) return res.status(400).json({ message: "Invalid Id" });
+
+//     if (req.user?.role !== "student") {
+//       return res.status(403).json({ message: "Only students can access their data" });
+//     }
+
+//     const student = await studentService.getStudentById(id);
+//     if (!student) return res.status(404).json({ message: "Student Not Found" });
+
+//     res.json(student);
+//   } catch (error: any) {
+//     res.status(500).json({ message: error.message });
+//   }
+// };
+
+// Get by ID - allow only student or mentor to view student data
 
 export const getById = async (req: AuthRequest, res: Response) => {
   try {
     const id = parseInt(req.params.id);
     if (!id) return res.status(400).json({ message: "Invalid Id" });
 
-    if (req.user?.role !== "student") {
-      return res.status(403).json({ message: "Only students can access their data" });
+    // Check if the user is a student or a mentor
+    if (req.user?.role !== "student" && req.user?.role !== "mentor") {
+      return res.status(403).json({ message: "Access denied" });
     }
 
     const student = await studentService.getStudentById(id);
