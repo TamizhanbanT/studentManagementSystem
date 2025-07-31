@@ -9,7 +9,9 @@ router.post('/',verifyToken,validateStudent,studentController.create)
 router.get('/',verifyToken,studentController.getAll)
 // router.get('/:id',studentController.getById)
 router.get("/:id", verifyToken, studentController.getById);
-router.put('/:id',verifyToken,validateStudent, studentController.update)
+// router.put('/:id',verifyToken,validateStudent, studentController.update)
+router.patch('/:id', verifyToken, validateStudentUpdate, studentController.update);
+
 router.delete('/:id',verifyToken,studentController.remove)
 
 export default router;

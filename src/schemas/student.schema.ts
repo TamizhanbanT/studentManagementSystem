@@ -14,7 +14,11 @@ export const studentSchema=z.object({
     subjects:z.array(z.number().optional( ))
 })
 
-export const updateStudentSchema=studentSchema.partial()
+export const updateStudentSchema = studentSchema.partial().refine(
+  (data) => Object.keys(data).length > 0,
+  { message: "At least one field must be provided for update" }
+);
+// export const updateStudentSchema=studentSchema.partial()
 
 export type CreateStudentDto=z.infer<typeof studentSchema>
 export type UpdateStudentDto=z.infer<typeof updateStudentSchema>
